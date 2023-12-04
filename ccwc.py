@@ -26,11 +26,8 @@ def count_lines(file_path):
 
 def count_words(file_path):
     try:
-        word_count = 0
         with open(file_path, 'r') as file:
-            for line in file:
-                words = line.split()
-                word_count += len(words)
+            word_count = sum(len(line.split()) for line in file)
             print(f"{word_count} {file_path}")
     except FileNotFoundError:
         print(f"Error: File '{file_path}' not found.")
@@ -39,9 +36,9 @@ def count_words(file_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='wc tool for word line character and byte count.')
+    parser = argparse.ArgumentParser(description='Count bytes, lines, words, or characters in a file')
     parser.add_argument('-c', '--count', metavar='FILE', type=str,
-                        help='The file path requested to run byte count command')
+                        help='File for which to count bytes')
     parser.add_argument('-l', '--lines', metavar='FILE', type=str,
                         help="File for which to count lines")
     parser.add_argument('-w', '--words', metavar='FILE', type=str,
