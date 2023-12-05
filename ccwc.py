@@ -35,6 +35,17 @@ def count_words(file_path):
         print(f"Error: {e}")
 
 
+def count_chars(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            char_count = sum(1 + len(line) for line in file)
+            print(f"{char_count} {file_path}")
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+
 def main():
     parser = argparse.ArgumentParser(description='Count bytes, lines, words, or characters in a file')
     parser.add_argument('-c', '--count', metavar='FILE', type=str,
@@ -43,6 +54,8 @@ def main():
                         help="File for which to count lines")
     parser.add_argument('-w', '--words', metavar='FILE', type=str,
                         help='File for which to count words')
+    parser.add_argument('-m', '--chars', metavar='FILE', type=str,
+                        help='File for which to count characters')
 
     args = parser.parse_args()
 
@@ -52,8 +65,10 @@ def main():
         count_lines(args.lines)
     elif args.words:
         count_words(args.words)
+    elif args.chars:
+        count_chars(args.chars)
     else:
-        print("Error: Please provide a file path with either '-c' or '-l' option.")
+        print("Error: Please provide a file path following either '-c' '-l' '-w' or '-m' option.")
 
 if __name__ == "__main__":
     main()
